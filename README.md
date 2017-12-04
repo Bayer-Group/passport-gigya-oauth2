@@ -23,22 +23,25 @@ requires a `verify` callback, which receives an access token and profile,
 and calls `done` providing a user.
 
     passport.use(new OAuth2Strategy({
-        authorizationURL: 'https://www.example.com/as/authorization.oauth2',
-        tokenURL: 'https://www.example.com/as/token.oauth2',
+        apiKey: EXAMPLE_API_KEY,
+        dataCenter: 'us1.gigya.com',
+        authorizationURL: 'https://<Data_Center>/oidc/op/v1.0/<API_KEY>/authorize',
+        tokenURL: 'https://<Data_Center>/oidc/op/v1.0/<API_KEY>/token',
         clientID: EXAMPLE_CLIENT_ID,
         clientSecret: EXAMPLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/oauth2/callback'
+        callbackURL: "http://localhost:3000/auth/oauth2/callback',
+        customHeaders: {'Authorization': 'Basic MTIzLTQ1Ni03ODk6c2hoaC1pdHMtYS1zZWNyZXQ='}
       },
       function(accessToken, refreshToken, profile, done) {
-        User.findOne({ 'gigya.id' : profile.id }, function (err, user) {
+        User.findOne({ 'gigya.sub': profile.sub }, function (err, user) {
             if (err) { return done(err); }
             if (user) {
                 return done(null, user);
             } else {
                 var newUser = new User();
-                newUser.gigya.id    = profile.id;
+                newUser.gigya.sub    = profile.sub;
                 newUser.gigya.token = accessToken;
-                newUser.gigya.name  = profile.displayName;
+                newUser.gigya.name  = profile.name;
                 newUser.gigya.email = profile.email;
                 newUser.save(function(err) {
                     if (err) { throw err; }
