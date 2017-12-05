@@ -23,10 +23,9 @@ requires a `verify` callback, which receives an access token and profile,
 and calls `done` providing a user.
 
     passport.use(new OAuth2Strategy({
-        apiKey: EXAMPLE_API_KEY,
-        dataCenter: 'us1.gigya.com',
         authorizationURL: 'https://<Data_Center>/oidc/op/v1.0/<API_KEY>/authorize',
         tokenURL: 'https://<Data_Center>/oidc/op/v1.0/<API_KEY>/token',
+        userInfoURL: 'https://<Data_Center>/oidc/op/v1.0/<API_KEY>/userinfo',
         clientID: EXAMPLE_CLIENT_ID,
         clientSecret: EXAMPLE_CLIENT_SECRET,
         callbackURL: "http://localhost:3000/auth/oauth2/callback',
