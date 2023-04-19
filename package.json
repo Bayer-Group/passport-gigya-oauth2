@@ -34,7 +34,7 @@
     "uid2": "0.0.x"
   },
   "devDependencies": {
-    "mocha": "2.x.x",
+    "mocha": "10.x.x",
     "chai": "2.x.x",
     "chai-passport-strategy": "0.2.x"
   },
